@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {CreateElementInput} from '../Components/CreateElementInput/CreateElementInput';
+import React, {useCallback, useState} from 'react';
 import {Input} from '../Components/Input/Input';
 import {CheckBox} from '../Components/Checkbox/CheckBox';
 import {TextArea} from '../Components/TextArea/TextArea';
+import Button from '../Components/Button/Button';
 
 import s from './FormPage.module.scss'
 
@@ -16,24 +16,25 @@ export const FormPage: React.FC = () => {
     const [checkboxElements, setCheckboxElements] = useState<number[]>([])
     const [textareaElements, setTextareaElements] = useState<number[]>([])
 
-    const changeInputValue = (value: string) => {
+    //handlers
+    const changeInputValue = useCallback((value: string) => {
         setInput(value)
-    }
-
-    const changeCheckboxValue = (value: string) => {
+    }, [input])
+    const changeCheckboxValue = useCallback((value: string) => {
         setCheckbox(value)
-    }
-
-    const changeTextareaValue = (value: string) => {
+    }, [checkbox])
+    const changeTextareaValue = useCallback((value: string) => {
         setTextarea(value)
-    }
+    }, [textarea])
 
+    //create dom elements
     const createElements = () => {
         setInputElements(createElementsArray(+input))
         setCheckboxElements(createElementsArray(+checkbox))
         setTextareaElements(createElementsArray(+textarea))
     }
 
+    //create array
     const createElementsArray = (value: number): number[] => {
         if (value === 0) {
             return []
@@ -46,39 +47,61 @@ export const FormPage: React.FC = () => {
         }
     }
 
+    //map
+    const mappedInputs = inputElements && inputElements.map((el, i) => {
+        return <Input key={i} type={'input'} label='new input'/>
+    })
+    const mappedCheckBox = checkboxElements && checkboxElements.map((el, i) => {
+        return <CheckBox key={i} type={'checkbox'} label='value'/>
+    })
+    const mappedTArea = textareaElements && textareaElements.map((el, i) => {
+        return <TextArea key={i} placeholder='Your message...'/>
+    })
+
     return (
         <div className={s.formPage_wrapper}>
             <h1>FORM PAGE</h1>
             <div className={s.inputs_container}>
-                <CreateElementInput label={'input'}
-                                    value={input}
-                                    changeValue={changeInputValue}
-                                    createElementCallback={createElements}/>
-                <CreateElementInput label={'checkbox'}
-                                    value={checkbox}
-                                    changeValue={changeCheckboxValue}
-                                    createElementCallback={createElements}/>
-                <CreateElementInput label={'textarea'}
-                                    value={textarea}
-                                    changeValue={changeTextareaValue}
-                                    createElementCallback={createElements}/>
+                <div className={s.input_wrapper}>
+                    <Input label={'input'}
+                           value={input}
+                           onChangeText={changeInputValue}/>
+                    <div className={s.createBtn_wrapper}>
+                        <Button onClick={createElements}>BUILD</Button>
+                    </div>
+                </div>
+                <div className={s.input_wrapper}>
+                    <Input label={'checkbox'}
+                           value={checkbox}
+                           onChangeText={changeCheckboxValue}/>
+                    <div className={s.createBtn_wrapper}>
+                        <Button onClick={createElements}>BUILD</Button>
+                    </div>
+                </div>
+                <div className={s.input_wrapper}>
+                    <Input label={'textarea'}
+                           value={textarea}
+                           onChangeText={changeTextareaValue}/>
+                    <div className={s.createBtn_wrapper}>
+                        <Button onClick={createElements}>BUILD</Button>
+                    </div>
+                </div>
             </div>
             <form className={s.form_wrapper}>
                 <h1 className={s.form_headline}>Form generator</h1>
                 <div>
-                    {inputElements && inputElements.map((el, i) => {
-                        return <Input key={i} type={'input'} label='new input'/>
-
-                    })}
+                    {
+                        mappedInputs
+                    }
                     <div className={s.checkbox_area}>
-                        {checkboxElements && checkboxElements.map((el, i) => {
-                            return <CheckBox key={i} type={'checkbox'} label='value'/>
-                        })}
+                        {
+                            mappedCheckBox
+                        }
                     </div>
                     <div className={s.textarea_block}>
-                        {textareaElements && textareaElements.map((el, i) => {
-                            return <TextArea key={i} placeholder='Your message...'/>
-                        })}
+                        {
+                            mappedTArea
+                        }
                     </div>
                 </div>
             </form>

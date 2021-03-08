@@ -11,6 +11,21 @@
 
     .inputs_container {
         margin: 0 auto;
+
+        .input_wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 10px;
+
+            .createBtn_wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 10px;
+            }
+        }
     }
 
     .form_wrapper {
@@ -38,10 +53,16 @@
 
 
 @media screen and(max-width: 500px) {
+    .inputs_container {
+        .input_wrapper {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
     .formPage_wrapper {
         .form_wrapper {
             padding: 40px 25px;
         }
     }
-
 }

@@ -1,0 +1,17 @@
+.navItem {
+    display: inline-block;
+    cursor: pointer;
+
+    a {
+        color: white;
+        font-weight: 700;
+    }
+
+    &:first-child {
+        margin-right: 20px;
+    }
+
+    .selected {
+        color: #3e3f5e;
+    }
+}
