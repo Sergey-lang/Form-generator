@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
+import {Redirect, Route, Switch} from 'react-router-dom';
+import {HomePage} from './HomePage/HomePage';
+import {FormPage} from './FormPage/FormPage';
+import {Nav} from './Nav/Nav';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export const PATH = {
+    HOME: '/home',
+    FORM: '/form'
 }
 
-export default App;
+export const App: React.FC = () => {
+
+    return (
+        <div className={'app'}>
+            <header>
+                <Nav/>
+            </header>
+            <main>
+                <Switch>
+                    <Route path='/' exact render={() => <Redirect to={PATH.HOME}/>}/>
+                    <Route path={PATH.HOME} exact render={() => <HomePage/>}/>
+                    <Route path={PATH.FORM} exact render={() => <FormPage/>}/>
+                </Switch>
+            </main>
+        </div>
+    );
+}
+

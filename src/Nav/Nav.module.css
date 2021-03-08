@@ -1,0 +1,17 @@
+.listItems:first-child {
+
+}
+
+.navItem {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.navItem a {
+    color: white;
+    font-weight: 700;
+}
+
+.navItem:first-child {
+    margin-right: 20px;
+}
