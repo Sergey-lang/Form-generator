@@ -31,7 +31,7 @@ export const FormPage: React.FC = () => {
     const createElements = () => {
         setInputElements(createElementsArray(+input))
         setCheckboxElements(createElementsArray(+checkbox))
-        setTextareaElements(createElementsArray(+textareaElements))
+        setTextareaElements(createElementsArray(+textarea))
     }
 
     const createElementsArray = (value: number): number[] => {
@@ -76,7 +76,7 @@ export const FormPage: React.FC = () => {
                         })}
                     </div>
                     <div className={s.textarea_block}>
-                        {checkboxElements && checkboxElements.map((el, i) => {
+                        {textareaElements && textareaElements.map((el, i) => {
                             return <TextArea key={i} placeholder='Your message...'/>
                         })}
                     </div>
